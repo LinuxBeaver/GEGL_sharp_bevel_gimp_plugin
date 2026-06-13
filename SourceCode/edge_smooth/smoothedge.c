@@ -37,7 +37,7 @@ id=2  gegl:dst-atop aux=[  ref=2 median-blur radius=2 alpha-percentile=-1 gaussi
 "  id=1  gegl:over aux=[ ref=1  xor aux=[   median-blur radius=2.4 alpha-percentile=2 abyss-policy=none    ]  "\
 
 
-/*It is mid 2023 and I still don't know how to hide these from the GEGL Graph. Everything else is easy to hide though*/
+/*It is mid 2023 and I still donꞌt know how to hide these from the GEGL Graph. Everything else is easy to hide though*/
 
 
 property_double  (alpha_percentile2, _("Median edge"), 73.0)
@@ -66,7 +66,7 @@ enum_end (GeglMedianBlurAbyssPolicyes)
 
 property_enum (abyss_policy, _("Abyss Policy"), GeglMedianBlurAbyssPolicyes,
                gegl_median_blur_abyss_policy_es, GEGL_MEDIAN_BLUR_ABYSS_NONE)
-  description (_("How image edges are handled. In default they don't clip but when applying this filter on subjects it makes sense for it to clip"))
+  description (_("How image edges are handled. In default they donꞌt clip but when applying this filter on subjects it makes sense for it to clip"))
 
 
 
@@ -101,7 +101,7 @@ static void attach (GeglOperation *operation)
                                   NULL);
 
 /*
-This "fixgraph" is for Gimp's non-destructive future. Median Blur at 0 makes no modifications to an image but solves a
+This "fixgraph" is for Gimpꞌs non-destructive future. Median Blur at 0 makes no modifications to an image but solves a
 bug by resetting gegl opacity. egl:opacity adjust the global opacity of an image; resulting in filters like "drop shadow" behaving
 in a damaged way because there global opacity is way to high. Median blur radius=0 resets its global opacity.
  */

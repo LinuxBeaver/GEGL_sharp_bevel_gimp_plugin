@@ -27,11 +27,11 @@ THIS FILTER IS NOT A CLONE OF CUSTOM BEVEL. IT IS A HEAVY MODIFICATION TO IT THA
 This plugin is very resource intensive because I was going towards quality.
 
 The sharp bevel graph recreation. You can change hardlight to other blend modes.
-If you feed this to Gimp's GEGL Graph filter you can get a static preview of this filter without installing it.
+If you feed this to Gimpꞌs GEGL Graph filter you can get a static preview of this filter without installing it.
 
 This requires another plugin of mine lb:threshold-alpha that is included.
 
-Both Median Blur radius=6's and neighborhood are meant to update together and they can't do this in a graph.
+Both Median Blur radius=6ꞌs and neighborhood are meant to update together and they canꞌt do this in a graph.
 
 The id and ref named "originalbg" are part of a special technique I found to preserve the original color of the image.
 
@@ -79,7 +79,7 @@ lb:threshold-alpha
 /* This is an embedded gegl graph for the plugin*/
 
 property_boolean (bevelcolorpolicy , _("Enable Color Priority mode"), FALSE)
-  description    (_("This (when enabled) disables the bevel's ability to get the layers color information. But in return the color overlay will be enabled. Due to the logic of this filter very dark colors or black will not work with it."))
+  description    (_("This (when enabled) disables the bevelꞌs ability to get the layers color information. But in return the color overlay will be enabled. Due to the logic of this filter very dark colors or black will not work with it."))
 
 
 property_int  (size, _("Size of the Bevel"), 1)
@@ -88,7 +88,7 @@ property_int  (size, _("Size of the Bevel"), 1)
   ui_meta     ("unit", "pixel-distance")
   description (_("Median Radius to control the size of the bevel"))
 
-property_double (bevelcontrol, _("Bevel's Flat Surface control"), 1)
+property_double (bevelcontrol, _("Bevelꞌs Flat Surface control"), 1)
     value_range (1.0, 6.0)
   ui_range (1.0, 3.0)
   description (_("Moving this slider up will give the bevel a flat surface. At 1 it will be a default sharp surface."))
@@ -157,7 +157,7 @@ property_enum (metric, _("Distance Map Setting"),
     description (_("Distance Map has three settings that alter the structure of the bevel. Chebyshev is the default; due to it being the best. But try the other two. "))
 
 /* In almost all cases ENUM list must be renamed. This seems to be an exception to the rule about ENUM list sharing the same name breaking GEGL plugins. It getting information from gegl-enums.c.
-That might have something to do with this exception. I don't understand why this exception exist - but it does.*/
+That might have something to do with this exception. I donꞌt understand why this exception exist - but it does.*/
 
 
 enum_start (gegl_median_blur_neighborhoodsharpbevel)
@@ -324,9 +324,9 @@ GeglProperties *o = GEGL_PROPERTIES (operation);
 /* Fix 3 is a special case that updates with defined median. Its radius and neigborhood update together with "median"*/
 
 
- /*"Fix"is a critical operation for Gimp's non-destructive future.
+ /*"Fix"is a critical operation for Gimpꞌs non-destructive future.
 A median blur at zero radius is confirmed to make no changes to an image.
-This option resets gegl:opacity's value to prevent many bugs.
+This option resets gegl:opacityꞌs value to prevent many bugs.
 plugins like clay, glossy balloon and custom bevel glitch out when
 drop shadow is applied in a gegl graph below them. median 0 solves this.*/
 
@@ -410,7 +410,7 @@ drop shadow is applied in a gegl graph below them. median 0 solves this.*/
   dt    = gegl_node_new_child (gegl,
                                   "operation", "gegl:distance-transform", "metric", 0,
                                   NULL);
-/* This is the operation that makes the bevel sharp. Looking at Oyvind's modification to my "custom bevel" (now gegl:chamfer in Gimp 2.99) gave me this idea.
+/* This is the operation that makes the bevel sharp. Looking at Oyvindꞌs modification to my "custom bevel" (now gegl:chamfer in Gimp 2.99) gave me this idea.
 Though I must clarify that I went much further with it. */
 
 
@@ -454,7 +454,7 @@ Though I must clarify that I went much further with it. */
   plus    = gegl_node_new_child (gegl,
                                   "operation", "gegl:plus",
                                   NULL);
- /*Plus is an example of a blend mode unique to GEGL. It is like Gimp's addition but not the same*/
+ /*Plus is an example of a blend mode unique to GEGL. It is like Gimpꞌs addition but not the same*/
 
 
   multiply3    = gegl_node_new_child (gegl,
@@ -478,26 +478,26 @@ Though I must clarify that I went much further with it. */
 grainmerge = gegl_node_new_child (gegl,
                               "operation", "gimp:layer-mode", "layer-mode", 47, "composite-mode", 1, NULL);
 
- /*As of now (july 2023) Gimp's Overlay blend mode is 23, if Gimp ever gets new blend modes this will break and it will either be 22-24 or some other number. Future GEGL maintainers
+ /*As of now (july 2023) Gimpꞌs Overlay blend mode is 23, if Gimp ever gets new blend modes this will break and it will either be 22-24 or some other number. Future GEGL maintainers
 need to know this.*/
 overlay = gegl_node_new_child (gegl,
                               "operation", "gimp:layer-mode", "layer-mode", 23, "composite-mode", 1, NULL);
 
- /*As of now (july 2023) Gimp's Softlight blend mode is 45, if Gimp ever gets new blend modes this will break and it will either be 44-46 or some other number. Future GEGL maintainers
+ /*As of now (july 2023) Gimpꞌs Softlight blend mode is 45, if Gimp ever gets new blend modes this will break and it will either be 44-46 or some other number. Future GEGL maintainers
 need to know this.*/
 softlight = gegl_node_new_child (gegl,
                               "operation", "gimp:layer-mode", "layer-mode", 45, "composite-mode", 1, NULL);
 
 
- /*As of now (july 2023) Gimp's addition blend mode is 33, if Gimp ever gets new blend modes this will break and it will either be 32-34 or some other number. Future GEGL maintainers
+ /*As of now (july 2023) Gimpꞌs addition blend mode is 33, if Gimp ever gets new blend modes this will break and it will either be 32-34 or some other number. Future GEGL maintainers
 need to know this.*/
 addition = gegl_node_new_child (gegl,
                                   "operation", "gimp:layer-mode", "layer-mode", 33, "composite-mode", 1, NULL);
 
- /*THIS (multiply2) USES GIMP'S LEGACY MULTIPLY BLEND MODE. In early development it called gegl:multiply but it was switched later*/
+ /*THIS (multiply2) USES GIMPꞌS LEGACY MULTIPLY BLEND MODE. In early development it called gegl:multiply but it was switched later*/
 
 
- /*As of now (july 2023) Gimp's legacy multiply blend mode is 3, if Gimp ever gets new blend modes this will break and it will either be 2-4 or some other number. Future GEGL maintainers
+ /*As of now (july 2023) Gimpꞌs legacy multiply blend mode is 3, if Gimp ever gets new blend modes this will break and it will either be 2-4 or some other number. Future GEGL maintainers
 need to know this.*/
 multiply2 = gegl_node_new_child (gegl,
                               "operation", "gimp:layer-mode", "layer-mode", 30, "blend-space", 1, "composite-mode", 0, NULL);
@@ -508,7 +508,7 @@ multiply2 = gegl_node_new_child (gegl,
   gegl_operation_meta_redirect (operation, "size", fix3, "radius");
   gegl_operation_meta_redirect (operation, "shape", median, "neighborhood");
   gegl_operation_meta_redirect (operation, "shape", fix3, "neighborhood");
-/* This is a special instruction two median blur radius's and their neighborhood base shapes udpate together. They fix a bug relating to anti erasing and a unwanted outline. */
+/* This is a special instruction two median blur radiusꞌs and their neighborhood base shapes udpate together. They fix a bug relating to anti erasing and a unwanted outline. */
   gegl_operation_meta_redirect (operation, "smooth", smooth, "iterations");
   gegl_operation_meta_redirect (operation, "azimuth", emboss, "azimuth");
   gegl_operation_meta_redirect (operation, "elevation", emboss, "elevation");
